@@ -1,0 +1,9 @@
+-r requirements.txt
+aiosqlite
+httpx
+pytest
+pytest-asyncio
+faker
+ruff
+mypy
+pre-commit

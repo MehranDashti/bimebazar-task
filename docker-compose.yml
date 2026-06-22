@@ -1,0 +1,39 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: fastapi-rbac-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: rbacdb
+      MYSQL_USER: rbacuser
+      MYSQL_PASSWORD: rbacpassword
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-urbacuser", "-prbacpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile
+    container_name: fastapi-rbac
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      # Overrides DATABASE_URL from .env so the hostname resolves to the db service
+      DATABASE_URL: mysql+aiomysql://rbacuser:rbacpassword@db:3306/rbacdb
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    # Uncomment for live-reload during development:
+    # volumes:
+    #   - ./app:/app/app
+
+volumes:
+  db_data:
