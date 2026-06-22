@@ -9,3 +9,5 @@ alembic
 aiomysql
 python-jose[cryptography]
 bcrypt
+httpx>=0.27
+apscheduler>=3.10
