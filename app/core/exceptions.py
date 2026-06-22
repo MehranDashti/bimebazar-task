@@ -18,3 +18,19 @@ class AuthenticationError(AppError):
 
 class InactiveAccountError(AppError):
     pass
+
+
+class InsufficientStockError(AppError):
+    pass
+
+
+class ReservationNotFound(AppError):
+    pass
+
+
+class ReservationStateError(AppError):
+    pass
+
+
+class DuplicateOrderError(AppError):
+    pass

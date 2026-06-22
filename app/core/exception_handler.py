@@ -7,8 +7,12 @@ from app.core.exceptions import (
     AppError,
     AuthenticationError,
     ConflictError,
+    DuplicateOrderError,
     InactiveAccountError,
+    InsufficientStockError,
     NotFoundError,
+    ReservationNotFound,
+    ReservationStateError,
 )
 
 _ERROR_MESSAGES: dict[int, str] = {
@@ -35,9 +39,13 @@ def _envelope(request: Request, code: int, message: str, error: dict) -> dict:
 
 _DOMAIN_STATUS_MAP: dict[type, int] = {
     NotFoundError: 404,
+    ReservationNotFound: 404,
     ConflictError: 409,
+    InsufficientStockError: 409,
+    DuplicateOrderError: 409,
     AuthenticationError: 401,
     InactiveAccountError: 403,
+    ReservationStateError: 422,
 }
 
 
