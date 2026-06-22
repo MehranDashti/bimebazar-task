@@ -6,7 +6,6 @@ _INSECURE_SECRET_KEYS = {
     "change-me-in-production-use-a-long-random-string-min-32-chars",
 }
 
-
 class Settings(BaseSettings):
     SERVER_LISTEN_IP: str = "0.0.0.0"
     SERVER_LISTEN_PORT: int = 8000
@@ -35,6 +34,9 @@ class Settings(BaseSettings):
 
     # Toggle the in-memory auth rate limiter (disable in tests/CI).
     RATE_LIMIT_ENABLED: bool = True
+
+    RESERVATION_TTL_MINUTES: int = 15
+    EXPIRY_SWEEP_INTERVAL_SECONDS: int = 60
 
     SEED_ADMIN_EMAIL: str = "admin@example.com"
     SEED_ADMIN_USERNAME: str = "admin"
