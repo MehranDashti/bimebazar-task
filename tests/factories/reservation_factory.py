@@ -8,7 +8,7 @@ from app.models.order import Order, OrderStatus
 from app.models.product import Product
 from app.models.reservation import Reservation, ReservationStatus
 from app.models.reservation_item import ProviderItemStatus, ReservationItem
-from app.tests.factories.inventory_factory import make_inventory, make_product, make_provider
+from tests.factories.inventory_factory import make_inventory, make_product, make_provider
 
 
 async def make_reservation(

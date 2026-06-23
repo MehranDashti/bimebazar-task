@@ -1,6 +1,6 @@
 from httpx import AsyncClient
 
-from app.tests.factories import user_payload
+from tests.factories import user_payload
 
 
 async def test_signup_success(client: AsyncClient):

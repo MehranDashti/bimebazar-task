@@ -10,7 +10,7 @@ from main import app
 
 # The in-memory rate limiter keys on client IP; the test client is always
 # 127.0.0.1, so leaving it on would throttle the suite. Exercised directly in
-# app/tests/test_core/test_rate_limit.py instead.
+# tests/test_core/test_rate_limit.py instead.
 settings.RATE_LIMIT_ENABLED = False
 
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
