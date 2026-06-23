@@ -1,14 +1,12 @@
 from datetime import UTC, datetime
 
 import pytest
-import pytest_asyncio
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.inventory import Inventory
 from app.models.inventory_provider import InventoryProvider, ProviderType
 from app.models.product import Product
 from app.repositories.inventory_repository import InventoryRepository
-
 
 # ── Seed helpers ──────────────────────────────────────────────────────────────
 

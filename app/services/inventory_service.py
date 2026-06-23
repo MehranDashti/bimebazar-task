@@ -2,10 +2,8 @@ import logging
 from datetime import UTC, datetime
 
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.exceptions import NotFoundError
-from app.models.inventory import Inventory
 from app.models.inventory_provider import InventoryProvider, ProviderType
 from app.providers.base import ProviderError
 from app.providers.registry import ProviderRegistry

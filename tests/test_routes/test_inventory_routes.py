@@ -7,7 +7,6 @@ from app.core.dependencies import get_inventory_service
 from app.core.exceptions import NotFoundError
 from main import app
 
-
 # ── Fixture ───────────────────────────────────────────────────────────────────
 
 @pytest.fixture(autouse=True)
@@ -59,8 +58,12 @@ async def test_get_availability_empty_sources(client: AsyncClient, override_inve
 
 
 @pytest.mark.asyncio
-async def test_get_availability_calls_service_with_product_id(client: AsyncClient, override_inventory_service):
-    override_inventory_service.get_availability = AsyncMock(return_value={"product_id": 7, "sources": []})
+async def test_get_availability_calls_service_with_product_id(
+    client: AsyncClient, override_inventory_service
+):
+    override_inventory_service.get_availability = AsyncMock(
+        return_value={"product_id": 7, "sources": []}
+    )
 
     await client.get("/api/v1/inventory/7/availability")
 
@@ -68,8 +71,12 @@ async def test_get_availability_calls_service_with_product_id(client: AsyncClien
 
 
 @pytest.mark.asyncio
-async def test_get_availability_service_raises_not_found_returns_404(client: AsyncClient, override_inventory_service):
-    override_inventory_service.get_availability = AsyncMock(side_effect=NotFoundError("product not found"))
+async def test_get_availability_service_raises_not_found_returns_404(
+    client: AsyncClient, override_inventory_service
+):
+    override_inventory_service.get_availability = AsyncMock(
+        side_effect=NotFoundError("product not found")
+    )
 
     resp = await client.get("/api/v1/inventory/999/availability")
     assert resp.status_code == 404

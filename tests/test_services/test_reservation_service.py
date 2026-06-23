@@ -6,20 +6,18 @@ import pytest
 
 from app.core.exceptions import (
     InsufficientStockError,
-    ReservationNotFound,
     ReservationStateError,
 )
+from app.models.inventory_provider import ProviderType
 from app.models.order import Order, OrderStatus
 from app.models.reservation import Reservation, ReservationStatus
 from app.models.reservation_item import ProviderItemStatus, ReservationItem
-from app.models.inventory_provider import ProviderType
 from app.providers.base import InsufficientProviderStock, ProviderTimeout, ProviderUnavailable
 from app.providers.registry import ProviderRegistry
 from app.repositories.inventory_repository import InventoryRepository
 from app.repositories.order_repository import OrderRepository
 from app.repositories.reservation_repository import ReservationRepository
 from app.services.reservation_service import ReservationService
-
 
 # ── Helpers — use SimpleNamespace to avoid SQLAlchemy mapper descriptor issues ─
 
@@ -31,7 +29,10 @@ def _make_provider(ptype: ProviderType = ProviderType.internal):
     return SimpleNamespace(
         id=1, name="TestProvider", type=ptype, base_url="http://fake",
         timeout_seconds=5,
-        capabilities={"check_stock": True, "hold_stock": True, "release_hold": True, "confirm_hold": True},
+        capabilities={
+            "check_stock": True, "hold_stock": True,
+            "release_hold": True, "confirm_hold": True,
+        },
         auth_config={},
     )
 

@@ -10,7 +10,6 @@ from app.core.exceptions import NotFoundError
 from app.models.order import OrderStatus
 from main import app
 
-
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def _stub_order(order_id: int = 1, reservation_id: int = 1):

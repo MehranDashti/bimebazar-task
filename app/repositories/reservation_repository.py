@@ -5,7 +5,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.models.reservation import Reservation, ReservationStatus
-from app.models.reservation_item import ReservationItem
 from app.repositories.base import BaseRepository
 
 

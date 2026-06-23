@@ -9,11 +9,11 @@ Scenario B — Timeout path: External provider times out during hold → reserva
              call → inventory consumed locally.
 """
 from types import SimpleNamespace
+from unittest.mock import AsyncMock, MagicMock
 
 import httpx
 import pytest
 import respx
-from unittest.mock import AsyncMock, MagicMock
 
 from app.models.inventory_provider import ProviderType
 from app.models.order import Order, OrderStatus

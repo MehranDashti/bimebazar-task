@@ -10,7 +10,6 @@ from app.models.reservation import Reservation, ReservationStatus
 from app.models.reservation_item import ReservationItem
 from app.repositories.reservation_repository import ReservationRepository
 
-
 # ── Seed helpers ──────────────────────────────────────────────────────────────
 
 async def _seed_reservation(
@@ -34,17 +33,26 @@ async def _seed_reservation(
 async def _seed_prerequisites(db: AsyncSession):
     now = datetime.now(UTC)
     product = Product(name="Prod", sku="SKU-R1", created_at=now, updated_at=now)
-    provider = InventoryProvider(name="WH-R", type=ProviderType.external, capabilities={}, is_active=True, created_at=now, updated_at=now)
+    provider = InventoryProvider(
+        name="WH-R", type=ProviderType.external, capabilities={},
+        is_active=True, created_at=now, updated_at=now,
+    )
     db.add(product)
     db.add(provider)
     await db.flush()
-    inv = Inventory(product_id=product.id, provider_id=provider.id, qty_available=10, qty_reserved=0, created_at=now, updated_at=now)
+    inv = Inventory(
+        product_id=product.id, provider_id=provider.id,
+        qty_available=10, qty_reserved=0, created_at=now, updated_at=now,
+    )
     db.add(inv)
     await db.flush()
     return product, provider, inv
 
 
-async def _seed_item(db: AsyncSession, reservation: Reservation, product_id: int, provider_id: int, inventory_id: int) -> ReservationItem:
+async def _seed_item(
+    db: AsyncSession, reservation: Reservation,
+    product_id: int, provider_id: int, inventory_id: int,
+) -> ReservationItem:
     now = datetime.now(UTC)
     item = ReservationItem(
         reservation_id=reservation.id,
@@ -89,7 +97,9 @@ async def test_get_expired_pending_returns_past_pending(db_session: AsyncSession
     # pending + not yet expired
     await _seed_reservation(db_session, expires_delta=timedelta(hours=1))
     # confirmed + expired
-    await _seed_reservation(db_session, status=ReservationStatus.confirmed, expires_delta=timedelta(hours=-1))
+    await _seed_reservation(
+        db_session, status=ReservationStatus.confirmed, expires_delta=timedelta(hours=-1)
+    )
 
     repo = ReservationRepository(db_session)
     results = await repo.get_expired_pending(limit=10)

@@ -7,7 +7,6 @@ from app.core.dependencies import get_inventory_service
 from app.core.exceptions import NotFoundError
 from main import app
 
-
 # ── Fixture ───────────────────────────────────────────────────────────────────
 
 @pytest.fixture(autouse=True)
@@ -21,7 +20,9 @@ def override_inventory_service():
 # ── Tests ─────────────────────────────────────────────────────────────────────
 
 @pytest.mark.asyncio
-async def test_sync_provider_returns_200_with_counts(client: AsyncClient, override_inventory_service):
+async def test_sync_provider_returns_200_with_counts(
+    client: AsyncClient, override_inventory_service
+):
     override_inventory_service.sync_from_provider = AsyncMock(return_value={
         "updated": 5, "errors": [], "message": "",
     })
@@ -34,7 +35,9 @@ async def test_sync_provider_returns_200_with_counts(client: AsyncClient, overri
 
 
 @pytest.mark.asyncio
-async def test_sync_provider_partial_failure_records_errors(client: AsyncClient, override_inventory_service):
+async def test_sync_provider_partial_failure_records_errors(
+    client: AsyncClient, override_inventory_service
+):
     override_inventory_service.sync_from_provider = AsyncMock(return_value={
         "updated": 2,
         "errors": ["SKU-001: connection refused"],
@@ -49,8 +52,12 @@ async def test_sync_provider_partial_failure_records_errors(client: AsyncClient,
 
 
 @pytest.mark.asyncio
-async def test_sync_provider_not_found_returns_404(client: AsyncClient, override_inventory_service):
-    override_inventory_service.sync_from_provider = AsyncMock(side_effect=NotFoundError("provider not found"))
+async def test_sync_provider_not_found_returns_404(
+    client: AsyncClient, override_inventory_service
+):
+    override_inventory_service.sync_from_provider = AsyncMock(
+        side_effect=NotFoundError("provider not found")
+    )
 
     resp = await client.post("/api/v1/providers/999/sync")
     assert resp.status_code == 404
@@ -58,8 +65,12 @@ async def test_sync_provider_not_found_returns_404(client: AsyncClient, override
 
 
 @pytest.mark.asyncio
-async def test_sync_provider_calls_service_with_provider_id(client: AsyncClient, override_inventory_service):
-    override_inventory_service.sync_from_provider = AsyncMock(return_value={"updated": 0, "errors": [], "message": ""})
+async def test_sync_provider_calls_service_with_provider_id(
+    client: AsyncClient, override_inventory_service
+):
+    override_inventory_service.sync_from_provider = AsyncMock(
+        return_value={"updated": 0, "errors": [], "message": ""}
+    )
 
     await client.post("/api/v1/providers/42/sync")
 

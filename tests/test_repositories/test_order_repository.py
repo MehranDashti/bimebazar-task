@@ -7,7 +7,6 @@ from app.models.order import Order, OrderStatus
 from app.models.reservation import Reservation, ReservationStatus
 from app.repositories.order_repository import OrderRepository
 
-
 # ── Seed helpers ──────────────────────────────────────────────────────────────
 
 async def _seed_reservation(db: AsyncSession) -> Reservation:

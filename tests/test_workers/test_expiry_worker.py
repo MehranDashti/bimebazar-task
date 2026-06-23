@@ -9,7 +9,6 @@ from app.workers.expiry_worker import (
     stop_expiry_scheduler,
 )
 
-
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def _make_factory(mock_db: AsyncMock):

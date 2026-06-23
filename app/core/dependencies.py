@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.security import decode_token
 from app.db.session import get_db
 from app.models.user import User
+from app.providers.registry import ProviderRegistry
 from app.repositories.inventory_repository import InventoryRepository
 from app.repositories.order_repository import OrderRepository
 from app.repositories.reservation_repository import ReservationRepository
@@ -13,7 +14,6 @@ from app.services.inventory_service import InventoryService
 from app.services.order_service import OrderService
 from app.services.reservation_service import ReservationService
 from app.services.user_service import UserService
-from app.providers.registry import ProviderRegistry
 
 bearer_scheme = HTTPBearer(auto_error=False)
 

@@ -1,7 +1,7 @@
 from datetime import UTC, datetime
 from enum import Enum as PyEnum
 
-from sqlalchemy import Boolean, DateTime, Enum, Integer, JSON, String
+from sqlalchemy import JSON, Boolean, DateTime, Enum, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base

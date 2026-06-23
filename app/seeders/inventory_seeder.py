@@ -117,6 +117,7 @@ class InventorySeeder(BaseSeeder):
         db.add(inv)
         await db.flush()
         print(
-            f"   ✔ created  inventory:product={product_id}/provider={provider_id} qty={qty_available}"
+            f"   ✔ created  inventory:product={product_id}"
+            f"/provider={provider_id} qty={qty_available}"
         )
         return inv

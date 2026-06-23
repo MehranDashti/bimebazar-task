@@ -9,7 +9,6 @@ from app.providers.base import ProviderError
 from app.repositories.inventory_repository import InventoryRepository
 from app.services.inventory_service import InventoryService
 
-
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def _make_provider(pid: int = 1, ptype: ProviderType = ProviderType.external, active: bool = True):

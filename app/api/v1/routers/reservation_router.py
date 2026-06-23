@@ -1,9 +1,7 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.dependencies import get_reservation_service
 from app.core.response import created, no_content, ok
-from app.db.session import get_db
 from app.schemas.reservation import ReservationCreateRequest, ReservationResponse
 from app.services.reservation_service import ReservationService
 

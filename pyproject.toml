@@ -20,7 +20,7 @@ select = [
 ]
 # B008: FastAPI intentionally calls Depends()/Query() in argument defaults.
 # UP046/UP047: keep classic Generic[T]/TypeVar style over PEP 695 syntax.
-ignore = ["B008", "UP046", "UP047"]
+ignore = ["B008", "UP042", "UP046", "UP047"]
 
 [tool.ruff.lint.per-file-ignores]
 # Entry-point scripts call load_dotenv() before importing app modules.

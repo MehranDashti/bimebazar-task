@@ -6,12 +6,12 @@ are pure HTTP-layer checks — no DB, no provider I/O.
 """
 from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock
 
 import pytest
 from httpx import AsyncClient
 
-from app.core.dependencies import get_order_service, get_reservation_service
+from app.core.dependencies import get_reservation_service
 from app.core.exceptions import (
     DuplicateOrderError,
     InsufficientStockError,
@@ -22,7 +22,6 @@ from app.models.order import OrderStatus
 from app.models.reservation import ReservationStatus
 from app.models.reservation_item import ProviderItemStatus
 from main import app
-
 
 # ── Fixtures ──────────────────────────────────────────────────────────────────
 
