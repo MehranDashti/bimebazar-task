@@ -1,9 +1,16 @@
+from __future__ import annotations
+
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from pydantic import BaseModel, Field, field_validator
 
 from app.models.reservation import ReservationStatus
 from app.models.reservation_item import ProviderItemStatus
+
+if TYPE_CHECKING:
+    from app.models.reservation import Reservation
+    from app.models.reservation_item import ReservationItem
 
 
 class ReservationItemRequest(BaseModel):
@@ -39,7 +46,7 @@ class ReservationItemResponse(BaseModel):
     model_config = {"from_attributes": True}
 
     @classmethod
-    def from_item(cls, item: object) -> "ReservationItemResponse":
+    def from_item(cls, item: ReservationItem) -> ReservationItemResponse:
         provider_name = ""
         if hasattr(item, "provider") and item.provider:
             provider_name = item.provider.name
@@ -66,7 +73,7 @@ class ReservationResponse(BaseModel):
     model_config = {"from_attributes": True}
 
     @classmethod
-    def from_reservation(cls, reservation: object) -> "ReservationResponse":
+    def from_reservation(cls, reservation: Reservation) -> ReservationResponse:
         items = [
             ReservationItemResponse.from_item(i)
             for i in (reservation.items or []) 

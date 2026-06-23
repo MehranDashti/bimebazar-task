@@ -71,7 +71,7 @@ class InventorySeeder(BaseSeeder):
         if provider:
             print(f"   — exists   provider:{name}")
             return provider
-        provider = InventoryProvider(name=name, **kwargs)  # type: ignore[arg-type]
+        provider = InventoryProvider(name=name, **kwargs)
         db.add(provider)
         await db.flush()
         print(f"   ✔ created  provider:{name}")
