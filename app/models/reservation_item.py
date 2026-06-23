@@ -60,10 +60,10 @@ class ReservationItem(Base):
         nullable=False,
     )
 
-    reservation: Mapped["Reservation"] = relationship(  # noqa: F821
+    reservation: Mapped[Reservation] = relationship(  # noqa: F821
         "Reservation", back_populates="items"
     )
-    product: Mapped["Product"] = relationship("Product", lazy="selectin")  # noqa: F821
-    provider: Mapped["InventoryProvider"] = relationship(  # noqa: F821
+    product: Mapped[Product] = relationship("Product", lazy="selectin")  # noqa: F821
+    provider: Mapped[InventoryProvider] = relationship(  # noqa: F821
         "InventoryProvider", lazy="selectin"
     )

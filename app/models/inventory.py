@@ -43,9 +43,9 @@ class Inventory(Base):
         nullable=False,
     )
 
-    product: Mapped["Product"] = relationship(  # noqa: F821
+    product: Mapped[Product] = relationship(  # noqa: F821
         "Product", back_populates="inventories", lazy="selectin"
     )
-    provider: Mapped["InventoryProvider"] = relationship(  # noqa: F821
+    provider: Mapped[InventoryProvider] = relationship(  # noqa: F821
         "InventoryProvider", back_populates="inventories", lazy="selectin"
     )

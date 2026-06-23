@@ -43,6 +43,6 @@ class Order(Base):
         nullable=False,
     )
 
-    reservation: Mapped["Reservation"] = relationship(  # noqa: F821
+    reservation: Mapped[Reservation] = relationship(  # noqa: F821
         "Reservation", back_populates="order"
     )

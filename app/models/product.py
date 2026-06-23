@@ -30,6 +30,6 @@ class Product(Base):
         nullable=False,
     )
 
-    inventories: Mapped[list["Inventory"]] = relationship(  # noqa: F821
+    inventories: Mapped[list[Inventory]] = relationship(  # noqa: F821
         "Inventory", back_populates="product", lazy="selectin"
     )

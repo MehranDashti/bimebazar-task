@@ -46,12 +46,12 @@ class Reservation(Base):
         nullable=False,
     )
 
-    items: Mapped[list["ReservationItem"]] = relationship(  # noqa: F821
+    items: Mapped[list[ReservationItem]] = relationship(  # noqa: F821
         "ReservationItem",
         back_populates="reservation",
         cascade="all, delete-orphan",
         lazy="selectin",
     )
-    order: Mapped["Order | None"] = relationship(  # noqa: F821
+    order: Mapped[Order | None] = relationship(  # noqa: F821
         "Order", back_populates="reservation", uselist=False, lazy="selectin"
     )
