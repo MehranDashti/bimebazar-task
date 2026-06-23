@@ -1,3 +1,3 @@
-from .example_seeder import ExampleSeeder
+from .inventory_seeder import InventorySeeder
 
-SEEDERS: list = [ExampleSeeder]
+SEEDERS: list = [InventorySeeder]
