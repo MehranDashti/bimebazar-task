@@ -1,4 +1,3 @@
-from app.schemas.example import ExampleCreate, ExampleResponse, ExampleUpdate
 from app.schemas.user import (
     RefreshTokenRequest,
     TokenResponse,
@@ -9,9 +8,6 @@ from app.schemas.user import (
 )
 
 __all__ = [
-    "ExampleCreate",
-    "ExampleUpdate",
-    "ExampleResponse",
     "UserSignupRequest",
     "UserLoginRequest",
     "UserUpdateRequest",
