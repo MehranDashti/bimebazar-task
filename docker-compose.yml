@@ -1,17 +1,30 @@
 services:
   db:
     image: mysql:8.0
-    container_name: fastapi-rbac-db
+    container_name: inventory-app-db
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: rbacdb
-      MYSQL_USER: rbacuser
-      MYSQL_PASSWORD: rbacpassword
+      MYSQL_DATABASE: inventorydb
+      MYSQL_USER: inventoryuser
+      MYSQL_PASSWORD: inventorypassword
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-urbacuser", "-prbacpassword"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uinventoryuser", "-pinventorypassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: inventory-app-redis
+    restart: unless-stopped
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -20,16 +33,19 @@ services:
     build:
       context: ./
       dockerfile: docker/Dockerfile
-    container_name: fastapi-rbac
+    container_name: inventory-app
     restart: unless-stopped
     env_file: .env
     environment:
-      # Overrides DATABASE_URL from .env so the hostname resolves to the db service
-      DATABASE_URL: mysql+aiomysql://rbacuser:rbacpassword@db:3306/rbacdb
+      # Overrides DATABASE_URL and REDIS_URL from .env so hostnames resolve to service names
+      DATABASE_URL: mysql+aiomysql://inventoryuser:inventorypassword@db:3306/inventorydb
+      REDIS_URL: redis://redis:6379/0
     ports:
       - "8000:8000"
     depends_on:
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     # Uncomment for live-reload during development:
     # volumes:
@@ -37,3 +53,4 @@ services:
 
 volumes:
   db_data:
+  redis_data:
