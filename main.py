@@ -18,7 +18,8 @@ from app.core.exceptions import AppError
 from app.core.logging import setup_logging
 from app.core.middleware import RequestLoggingMiddleware
 from app.core.response import ok
-from app.db.session import check_db, create_tables
+from app.db.session import AsyncSessionLocal, check_db, create_tables
+from app.workers.expiry_worker import start_expiry_scheduler, stop_expiry_scheduler
 
 
 @asynccontextmanager
@@ -27,7 +28,12 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # In production, schema is owned by Alembic migrations — don't create_all on boot.
     if not settings.PRODUCTION:
         await create_tables()
+    start_expiry_scheduler(
+        session_factory=AsyncSessionLocal,
+        interval_seconds=settings.EXPIRY_SWEEP_INTERVAL_SECONDS,
+    )
     yield
+    stop_expiry_scheduler()
 
 
 def create_app() -> FastAPI:
