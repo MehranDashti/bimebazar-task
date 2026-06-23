@@ -5,10 +5,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.security import decode_token
 from app.db.session import get_db
 from app.models.user import User
-from app.repositories.example_repository import ExampleRepository
+from app.repositories.inventory_repository import InventoryRepository
+from app.repositories.order_repository import OrderRepository
+from app.repositories.reservation_repository import ReservationRepository
 from app.repositories.user_repository import UserRepository
-from app.services.example_service import ExampleService
+from app.services.inventory_service import InventoryService
+from app.services.order_service import OrderService
+from app.services.reservation_service import ReservationService
 from app.services.user_service import UserService
+from app.providers.registry import ProviderRegistry
 
 bearer_scheme = HTTPBearer(auto_error=False)
 
@@ -17,8 +22,23 @@ async def get_user_service(db: AsyncSession = Depends(get_db)) -> UserService:
     return UserService(user_repo=UserRepository(db))
 
 
-async def get_example_service(db: AsyncSession = Depends(get_db)) -> ExampleService:
-    return ExampleService(repo=ExampleRepository(db))
+async def get_reservation_service(
+    db: AsyncSession = Depends(get_db),
+) -> ReservationService:
+    return ReservationService(
+        inv_repo=InventoryRepository(db),
+        res_repo=ReservationRepository(db),
+        order_repo=OrderRepository(db),
+        registry=ProviderRegistry(),
+    )
+
+
+async def get_order_service(db: AsyncSession = Depends(get_db)) -> OrderService:
+    return OrderService(order_repo=OrderRepository(db))
+
+
+async def get_inventory_service(db: AsyncSession = Depends(get_db)) -> InventoryService:
+    return InventoryService(inv_repo=InventoryRepository(db))
 
 
 async def get_current_user(
